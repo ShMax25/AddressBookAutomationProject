@@ -1,9 +1,8 @@
 package ru.stqa.pft.addressbook;
 
-import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 
-public class GroupDeletionTest extends TesBase {
+public class GroupDeletionTest extends TestBase {
 
   @Test
   public void testGroupDeletion () {
