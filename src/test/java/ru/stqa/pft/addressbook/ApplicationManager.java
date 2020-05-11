@@ -9,12 +9,14 @@ import java.util.concurrent.TimeUnit;
 public class ApplicationManager {
   public WebDriver driver;
 
+  private GroupHelper groupHelper;
+
   public void init () {
     System.setProperty("webriver.chrome.driver", System.getProperty("user.dir") + "src/test/resources/drivers/chromedriver");
-    driver = new ChromeDriver();
-    driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-
-    driver.get("http://localhost/addressbook/index.php");
+   driver = new ChromeDriver();
+   driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+   groupHelper = new GroupHelper(driver);
+   driver.get("http://localhost/addressbook/index.php");
     login();
   }
 
@@ -39,24 +41,6 @@ public class ApplicationManager {
     driver.findElement(By.linkText("add new")).click();
   }
 
-  public void returnToGroupPage () {
-    driver.findElement(By.linkText("group page")).click();
-  }
-
-  public void submitGroupCreation () {
-    driver.findElement(By.name("submit")).click();
-  }
-
-  public void fillGroupForm (GroupData groupData) {
-    driver.findElement(By.name("group_name")).sendKeys(groupData.getName());
-    driver.findElement(By.name("group_header")).sendKeys(groupData.getHeader());
-    driver.findElement(By.name("group_footer")).sendKeys(groupData.getFooter());
-  }
-
-  public void initGroupCreation () {
-    driver.findElement(By.name("new")).click();
-  }
-
   public void goToGroupPage () {
     driver.findElement(By.linkText("groups")).click();
   }
@@ -65,11 +49,7 @@ public class ApplicationManager {
     driver.quit();
   }
 
-  public void deleteSectedGroups () {
-    driver.findElement(By.name("delete")).click();
-  }
-
-  public void selectGroup () {
-    driver.findElement(By.name("selected[]")).click();
+  public GroupHelper getGroupHelper () {
+    return groupHelper;
   }
 }
